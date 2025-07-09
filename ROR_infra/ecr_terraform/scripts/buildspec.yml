@@ -1,0 +1,33 @@
+version: 0.2
+phases:
+  pre_build:
+    commands:
+      - echo 'Starting build process'
+      - echo 'Build timestamp: $(date -u)'
+      - echo 'Source version: $CODEBUILD_RESOLVED_SOURCE_VERSION'
+      - echo 'Logging in to Amazon ECR...'
+      - aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com
+      - REPOSITORY_URI_RAILS=$AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$RAILS_REPO
+      - REPOSITORY_URI_WEBSERVER=$AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$WEBSERVER_REPO
+      - IMAGE_TAG=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
+  build:
+    commands:
+      - echo 'Building Rails application image...'
+      - docker build -f docker/app/Dockerfile -t rails_app:$IMAGE_TAG . || (sleep 60 && docker build -f docker/app/Dockerfile -t rails_app:$IMAGE_TAG .)
+      - docker tag rails_app:$IMAGE_TAG $REPOSITORY_URI_RAILS:$IMAGE_TAG
+      - docker tag rails_app:$IMAGE_TAG $REPOSITORY_URI_RAILS:latest
+      - echo 'Building webserver image...'
+      - docker build -f docker/nginx/Dockerfile -t webserver:$IMAGE_TAG . || (sleep 60 && docker build -f docker/nginx/Dockerfile -t webserver:$IMAGE_TAG .)
+      - docker tag webserver:$IMAGE_TAG $REPOSITORY_URI_WEBSERVER:$IMAGE_TAG
+      - docker tag webserver:$IMAGE_TAG $REPOSITORY_URI_WEBSERVER:latest
+  post_build:
+    commands:
+      - echo 'Pushing Docker images to ECR...'
+      - docker push $REPOSITORY_URI_RAILS:$IMAGE_TAG
+      - docker push $REPOSITORY_URI_RAILS:latest
+      - docker push $REPOSITORY_URI_WEBSERVER:$IMAGE_TAG
+      - docker push $REPOSITORY_URI_WEBSERVER:latest
+      - echo 'Build process completed successfully'
+cache:
+  paths:
+    - /root/.docker/**/* 
