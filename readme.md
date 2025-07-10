@@ -27,7 +27,7 @@ mallow-main/
 │       │   ├── codebuild.tf
 │       │   ├── iam.tf
 │       │   └── ...
-│       └── ecr_hostimg/            # Application Infrastructure
+│       └── ecr_hosting/            # Application Infrastructure
 │           ├── README.md           # Detailed documentation for ECS/RDS/S3 setup
 │           ├── main.tf
 │           ├── modules/

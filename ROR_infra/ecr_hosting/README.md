@@ -1,4 +1,4 @@
-# ECR Hostimg Terraform Infrastructure
+# ECR Hosting Terraform Infrastructure
 
 This directory contains Terraform code to provision AWS infrastructure for a Ruby on Rails application using ECS, RDS, S3, ALB (ELB), IAM, VPC, and Secrets Manager.
 
