@@ -119,7 +119,3 @@ After applying, Terraform will output:
 - `manual_build_commands` - Helper commands for manual Docker build/tag/push
 
 ---
-
-## License
-
-MIT or your company license here. 

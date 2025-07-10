@@ -186,6 +186,3 @@ After applying, Terraform will output:
 
 ---
 
-## License
-
-MIT or your company license here. 

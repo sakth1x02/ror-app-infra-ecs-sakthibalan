@@ -150,13 +150,3 @@ echo "Complete infrastructure deployment finished successfully."
 
 ---
 
-## Documentation
-
-- **[ECR Terraform README](ror-app-infra-ecs-sakthibalan/ROR_infra/ecr_terraform/README.md)**: CI/CD pipeline documentation
-- **[ECR Hostimg README](ror-app-infra-ecs-sakthibalan/ROR_infra/ecr_hostimg/README.md)**: Application infrastructure documentation
-
----
-
-## License
-
-MIT or your company license here.
