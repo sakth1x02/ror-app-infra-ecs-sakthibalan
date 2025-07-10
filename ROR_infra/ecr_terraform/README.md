@@ -20,7 +20,8 @@ This directory contains Terraform code to provision AWS infrastructure for a CI/
 │   └── buildspec.yml
 └── README.md
 
-> **Note:** The `buildspec.yml` file is included in the `scripts/` directory for reference only and is not directly used by the Terraform code.
+*Note:** The `buildspec.yml` file is included in the `scripts/` directory for reference only and is not directly used by the Terraform code.
+```
 
 ---
 
